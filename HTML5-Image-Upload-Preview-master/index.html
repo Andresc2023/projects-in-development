@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>
+			HTML5 image upload with preview and progress bar
+		</title>
+
+		<link href="style.css" rel="stylesheet">
+		<script type="text/javascript" src="upload.js"></script>
+
+	</head>
+
+	<body>
+
+		<form action="uploadServlet" method="post" enctype="multipart/form-data">
+			<input type="file" name="image" accept="image/*">
+			<input type="button" value="Save File" onclick="saveFile()"/>
+			<script>
+				async function saveFile() {
+				  // (A) CREATE BLOB OBJECT
+				  var myBlob = new Blob(["CONTENT"], {type: "png/plain"});
+			
+				  // (B) FILE HANDLER & FILE STREAM
+				  const fileHandle = await window.showSaveFilePicker({
+					types: [{
+					  description: "image file",
+					  accept: {"png/plain": [".png"]}
+					}]
+				  });
+				  const fileStream = await fileHandle.createWritable();
+			
+				  // (C) WRITE FILE
+				  await fileStream.write(myBlob);
+				  await fileStream.close();
+				}
+				
+			
+			  
+		
+				</script>
+		</form>
+		
+
+	</body>
+
+</html>
